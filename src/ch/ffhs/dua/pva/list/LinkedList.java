@@ -6,13 +6,19 @@ import java.util.List;
 public class LinkedList<E> extends ListBasic<E> implements List<E>
 {
 
-
+	Node head;
+	
+	public LinkedList() 
+	{
+		head = new Node(null);
+	}
     
-    @Override
+	
+	@Override
     public int size()
     {
         // TODO
-    	return -1;
+    	return 0;
     }
 
     @Override
@@ -25,8 +31,16 @@ public class LinkedList<E> extends ListBasic<E> implements List<E>
     @Override
     public E get(int index)
     {
-        // TODO
-    	return null;
+        Node currentNode = head;
+    	for(int i = 0; i < index ; i++) {
+//        	if(!currentNode.hasNext()) {
+//        		return null;
+//        	}
+        	
+        	currentNode = currentNode.next;
+        	
+        }
+    	return (E) currentNode.getElement();
     }
 
 
@@ -41,7 +55,10 @@ public class LinkedList<E> extends ListBasic<E> implements List<E>
     @Override
     public boolean add(E element)
     {
-        // TODO
+        
+    	Node newNode = new Node(element);
+    	head.next = newNode;
+    	
         return true;
     }
 
@@ -90,14 +107,31 @@ public class LinkedList<E> extends ListBasic<E> implements List<E>
 
     private static class Node<E>
     {
-        E element;
+        private E element;
         Node<E> next;
         Node<E> prev;
         
-        public Node() {
+        public Node(E element) {
+        	this.element = element;
         	next = null;
         	prev = null;
         }
+        
+        public boolean hasNext() 
+        {
+        	if(this.next == null) {
+        		return false;
+        	}
+        	return true;
+        }
+
+		public E getElement() {
+			return element;
+		}
+
+		public void setElement(E element) {
+			this.element = element;
+		}
     }
     
     private class LinkedListIterator implements Iterator<E>
